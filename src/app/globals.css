@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --retro-purple: 157 78 221;
+    --retro-pink: 255 0 110;
+    --retro-cyan: 6 255 240;
+    --retro-yellow: 255 214 10;
+    --retro-orange: 255 133 0;
+    --retro-blue: 67 97 238;
+    --offline-dark: 26 14 46;
+    --offline-darker: 13 2 33;
+    --offline-light: 240 230 255;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-offline-darker text-offline-light font-body;
+    background: linear-gradient(135deg, #0D0221 0%, #1A0E2E 50%, #2D1B4E 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold;
+  }
+
+  /* Smooth scrolling with offset for sticky header */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Retro gradient text effect */
+  .gradient-text {
+    background: linear-gradient(135deg, rgb(var(--retro-cyan)), rgb(var(--retro-purple)), rgb(var(--retro-pink)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Festival card with glow */
+  .festival-card {
+    @apply bg-gradient-to-br from-offline-dark/90 to-offline-darker/90 backdrop-blur-sm;
+    border: 1px solid rgba(157, 78, 221, 0.3);
+    box-shadow: 0 0 20px rgba(157, 78, 221, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .festival-card:hover {
+    border-color: rgba(157, 78, 221, 0.6);
+    box-shadow: 0 0 30px rgba(157, 78, 221, 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* CTA Button */
+  .btn-primary {
+    @apply px-8 py-4 bg-gradient-to-r from-retro-purple to-retro-pink text-white font-display font-bold rounded-full;
+    @apply hover:shadow-lg hover:shadow-retro-purple/50 transition-all duration-300;
+    @apply hover:scale-105 active:scale-95;
+  }
+
+  /* Navigation link */
+  .nav-link {
+    @apply text-offline-light/80 hover:text-retro-cyan transition-colors duration-200;
+    @apply relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5;
+    @apply after:bg-retro-cyan after:transition-all after:duration-300;
+    @apply hover:after:w-full;
+  }
+
+  /* Flip card container */
+  .flip-card {
+    perspective: 1000px;
+    @apply w-full h-full;
+  }
+
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+
+  .flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
+  }
+}
+
+@layer utilities {
+  /* Noise texture overlay for 90s vibe */
+  .noise-texture::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* VHS scanline effect */
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.1) 50%);
+    background-size: 100% 4px;
+    pointer-events: none;
+    opacity: 0.05;
+  }
+}
